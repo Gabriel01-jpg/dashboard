@@ -3,9 +3,11 @@ import incomeImg from '../../images/Entradas.svg'
 import contactImg from '../../images/Contacts.svg'
 
 import { Container } from './style'
-import {Header} from "../Header";
+import {useFormData} from "../../Hooks/useFormData";
 
 export function Cards(){
+    const { dataForm } = useFormData()
+
     return (
         <Container >
             <div>
@@ -13,7 +15,7 @@ export function Cards(){
                     <p>Entrar em contato</p>
                     <img src={phoneImg} alt="Phone imagem"/>
                 </header>
-                <strong>130</strong>
+                <strong>{dataForm.length}</strong>
             </div>
             <div>
                 <header>
@@ -27,7 +29,7 @@ export function Cards(){
                     <p>Total usuários interessados</p>
                     <img src={contactImg} alt="Contato imagem"/>
                 </header>
-                <strong>290</strong>
+                <strong>{dataForm.length}</strong>
             </div>
         </Container>
     )

@@ -1,11 +1,15 @@
 import {Container} from "./style";
+import {useFormData} from "../../Hooks/useFormData";
 
 
 interface TableProps {
-    onOpenMessageModal: () => void;
+    onOpenMessageModal: (id: number) => void;
 }
 
+
 export function InterestListTable({ onOpenMessageModal }: TableProps){
+    const { dataForm } = useFormData()
+
     return (
         <Container >
             <table>
@@ -21,34 +25,24 @@ export function InterestListTable({ onOpenMessageModal }: TableProps){
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>gabriellima170801@gmail.com</td>
-                    <td>Gabriel</td>
-                    <td>Goiânia - Goiás</td>
-                    <td className="number"><a href="https://wa.me/62981204631" target="_blank">(62) 98120-4631</a></td>
-                    <td>08/10/2021</td>
-                    <td className="verMessage"><button onClick={onOpenMessageModal}>Ver mensagem</button></td>
-                    <td>
-                        <input
-                        type="checkbox"
+                {dataForm.map((data) => {
+                    return (
+                        <tr>
+                            <td>{data.email}</td>
+                            <td>{data.nome}</td>
+                            <td>{data.endereco}</td>
+                            <td className="number"><a href={"https://wa.me/" + data.telefone} target="_blank">{`(${data.telefone.slice(0, 2)}) ${data.telefone.slice(2)}`}</a></td>
+                            <td>{new Intl.DateTimeFormat('pt-BR').format(new Date(data.createdAt))}</td>
+                            <td className="verMessage"><button onClick={() => { onOpenMessageModal(data.id) }}>Ver mensagem</button></td>
+                            <td>
+                                <input
+                                    type="checkbox"
 
-                        />
-                    </td>
-                </tr>
-                <tr>
-                    <td>teste@gmail.com</td>
-                    <td>Testando</td>
-                    <td>Goiânia - Goiás</td>
-                    <td className="number"><a href="https://wa.me/62981204631" target="_blank">(62) 98120-4631</a></td>
-                    <td>08/10/2021</td>
-                    <td className="verMessage"><button onClick={onOpenMessageModal}>Ver mensagem</button></td>
-                    <td>
-                        <input
-                            type="checkbox"
-
-                        />
-                    </td>
-                </tr>
+                                />
+                            </td>
+                        </tr>
+                    )
+                })}
                 </tbody>
             </table>
         </Container>

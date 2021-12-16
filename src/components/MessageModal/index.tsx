@@ -1,6 +1,7 @@
-import { Container } from './style'
-
 import Modal from 'react-modal';
+import {useFormData} from "../../Hooks/useFormData";
+
+import { Container } from './style'
 
 interface MessageModalProps {
     isOpen: boolean;
@@ -9,7 +10,8 @@ interface MessageModalProps {
 
 Modal.setAppElement('#root');
 
-export function MessageModal({ isOpen, onRequestClose } : MessageModalProps){
+export function MessageModal({ isOpen, onRequestClose} : MessageModalProps){
+    const { dataForm, idModal } = useFormData()
     return (
         <Modal
             isOpen={isOpen}
@@ -18,7 +20,11 @@ export function MessageModal({ isOpen, onRequestClose } : MessageModalProps){
             className="react-modal-content"
         >
             <Container >
-
+                {dataForm.filter((value) => value.id ===  idModal).map(value => {
+                    return (
+                        <strong>{value.mensagem}</strong>
+                    )
+                })}
 
             </Container>
         </Modal>
